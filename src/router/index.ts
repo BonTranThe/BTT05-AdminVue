@@ -5,6 +5,7 @@ import RegisterUser from '../components/RegisterUser.vue'
 import BackGround from '../components/BackGround.vue'
 import NewProduct from '../components/NewProduct.vue'
 import ListProduct from '../components/ListProduct.vue'
+import EditProduct from '../components/EditProduct.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/homemanage/listproduct',
         name: 'listproduct',
         component: ListProduct,
+      },
+      {
+        path: '/homemanage/editproduct',
+        name: 'editproduct',
+        component: EditProduct,
       },
     ],
   },
