@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import ManageView from '../views/ManageView.vue'
 import LoginUser from '../components/LoginUser.vue'
 import RegisterUser from '../components/RegisterUser.vue'
+import BackGround from '../components/BackGround.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,6 +14,18 @@ const routes: Array<RouteRecordRaw> = [
     path: '/register',
     name: 'register',
     component: RegisterUser,
+  },
+  {
+    path: '/manage',
+    name: 'manage',
+    component: ManageView,
+    children: [
+      {
+        path: '/homemanage',
+        name: 'homemanage',
+        component: BackGround,
+      }
+    ],
   },
   {
     path: '/:pathMatch(.*)*',

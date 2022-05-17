@@ -137,9 +137,7 @@ export default {
     },
     async submitForm() {
       let eleForm = this.$refs.form;
-      // console.log(typeof eleForm); object or []
       let valid = await eleForm.validate();
-      // console.log(typeof valid); boolean
       if (!valid) {
         return;
       }
