@@ -3,6 +3,7 @@ import ManageView from '../views/ManageView.vue'
 import LoginUser from '../components/LoginUser.vue'
 import RegisterUser from '../components/RegisterUser.vue'
 import BackGround from '../components/BackGround.vue'
+import NewProduct from '../components/NewProduct.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
