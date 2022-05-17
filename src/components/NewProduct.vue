@@ -6,7 +6,6 @@
         ref="form"
         :model="product"
         class="newproduct-form"
-        :rules="rulesProduct"
       >
         <el-form-item prop="name">
           <el-input
@@ -69,44 +68,6 @@ export default {
       products: this.$store.state.products,
       product: this.$store.state.product,
       loading: false,
-      rulesProduct: {
-        name: [
-          {
-            required: true,
-            message: "Name of product is required",
-            trigger: "blur",
-          },
-          {
-            min: 4,
-            message: "Name of product length should be at least 4 characters",
-            trigger: "blur",
-          },
-        ],
-        price: [
-          {
-            required: true,
-            message: "Price (number) is greater than or equal 1$",
-            trigger: "blur",
-          },
-          {
-            min: 1,
-            message: "Price length should be at least 1 characters",
-            trigger: "blur",
-          },
-        ],
-        quantity: [
-          {
-            required: true,
-            message: "Quantity is required (number)",
-            trigger: "blur",
-          },
-          {
-            min: 1,
-            message: "Quantity length should be at least 1 characters",
-            trigger: "blur",
-          },
-        ],
-      },
     };
   },
   watch: {

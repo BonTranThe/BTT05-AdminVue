@@ -4,6 +4,7 @@ import LoginUser from '../components/LoginUser.vue'
 import RegisterUser from '../components/RegisterUser.vue'
 import BackGround from '../components/BackGround.vue'
 import NewProduct from '../components/NewProduct.vue'
+import ListProduct from '../components/ListProduct.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,7 +26,17 @@ const routes: Array<RouteRecordRaw> = [
         path: '/homemanage',
         name: 'homemanage',
         component: BackGround,
-      }
+      },
+      {
+        path: '/homemanage/newproduct',
+        name: 'newproduct',
+        component: NewProduct,
+      },
+      {
+        path: '/homemanage/listproduct',
+        name: 'listproduct',
+        component: ListProduct,
+      },
     ],
   },
   {
