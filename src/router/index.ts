@@ -1,25 +1,62 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import ManageView from '../views/ManageView.vue'
+import LoginUser from '../components/LoginUser.vue'
+import RegisterUser from '../components/RegisterUser.vue'
+import BackGround from '../components/BackGround.vue'
+import NewProduct from '../components/NewProduct.vue'
+import ListProduct from '../components/ListProduct.vue'
+import EditProduct from '../components/EditProduct.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'login',
+    component: LoginUser,
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/register',
+    name: 'register',
+    component: RegisterUser,
+  },
+  {
+    path: '/manage',
+    name: 'manage',
+    component: ManageView,
+    children: [
+      {
+        path: '/homemanage',
+        name: 'homemanage',
+        component: BackGround,
+      },
+      {
+        path: '/homemanage/newproduct',
+        name: 'newproduct',
+        component: NewProduct,
+      },
+      {
+        path: '/homemanage/listproduct',
+        name: 'listproduct',
+        component: ListProduct,
+      },
+      {
+        path: '/homemanage/editproduct',
+        name: 'editproduct',
+        component: EditProduct,
+      },
+    ],
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'login',
+    component: LoginUser,
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  linkActiveClass: "active",
+  linkExactActiveClass: "exact-active",
 })
 
 export default router
