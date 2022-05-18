@@ -1,18 +1,19 @@
 <template>
   <div id="listProduct">
     <h1 style="text-align: center; font-size: 30px">List Product</h1>
-    <el-table :data="filterTableData" style="width: 100%">
-      <el-table-column label="Serial" prop="id" />
-      <el-table-column label="Name" prop="name" />
-      <el-table-column label="Price ($)" prop="price" />
-      <el-table-column label="Quantity" prop="quantity" />
-      <el-table-column align="right">
+    <el-table :data="filterTableData" border style="width: 100">
+      <el-table-column type="index" width="100" label="Order" align="center" />
+      <el-table-column label="Serial" prop="id" align="center" width="240" />
+      <el-table-column label="Name" prop="name" align="center" width="400" />
+      <el-table-column label="Price ($)" prop="price" align="center" />
+      <el-table-column label="Quantity" prop="quantity" align="center" />
+      <el-table-column align="center" width="160">
         <template #header>
           <el-button @click="passNewProduct" type="primary" size="small"
             >Add New Product</el-button
           >
         </template>
-        <template #default="scope">
+        <template #default="scope" >
           <el-popconfirm
             confirm-button-text="Yes"
             cancel-button-text="No"

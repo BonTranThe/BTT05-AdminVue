@@ -94,6 +94,8 @@ export default {
         this.$message.error("Please fill out fully to add new product!");
         return;
       } else {
+        this.loading = true;
+        setTimeout(() => (this.loading = false), 1900);
         e.preventDefault();
         this.products.push({
           id: Date.now(),
@@ -101,11 +103,13 @@ export default {
           price: this.product.price,
           quantity: this.product.quantity,
         });
-        this.showModal = true;
+        setTimeout(() => {
+          this.showModal = true;
+          this.product.name = "";
+          this.product.price = "";
+          this.product.quantity = "";
+        },2000);
       }
-      this.product.name = "";
-      this.product.price = "";
-      this.product.quantity = "";
     },
   },
 };

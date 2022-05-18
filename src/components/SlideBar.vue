@@ -19,8 +19,14 @@
               <el-icon><briefcase /></el-icon>
               <span>Manage Product</span>
             </template>
-            <el-menu-item index="2-1" @click="toNewProduct"> New Product</el-menu-item>
-            <el-menu-item index="2-2" @click="toListProduct">List Product</el-menu-item>
+            <router-link to="/homemanage/newproduct" class="nav-link"
+              ><el-menu-item index="2-1">New Product</el-menu-item></router-link
+            >
+            <router-link to="/homemanage/listproduct" class="nav-link"
+              ><el-menu-item index="2-2"
+                >List Product</el-menu-item
+              ></router-link
+            >
           </el-sub-menu>
           <el-menu-item index="3">
             <template #title>
@@ -140,19 +146,23 @@
 export default {
   name: "SlideBar",
   methods: {
-    toNewProduct() {
-      this.$router.push("/homemanage/newproduct");
-    },
-    toListProduct() {
-      this.$router.push("/homemanage/listproduct");
-    },
     toHomeManage() {
       this.$router.push("/homemanage");
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style>
+<style lang="scss" scoped>
+a {
+  text-decoration: none;
+  color: #fff;
 
+  &.active .el-menu-item {
+    color: #ffd04b;
+  }
+}
+.el-menu-item.is-active {
+  color: #fff;
+}
 </style>
