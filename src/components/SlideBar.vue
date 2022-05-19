@@ -27,6 +27,14 @@
                 >List Product</el-menu-item
               ></router-link
             >
+            <router-link to="/homemanage/newproductapi" class="nav-link"
+              ><el-menu-item index="2-1">New Product API</el-menu-item></router-link
+            >
+            <router-link to="/homemanage/listproductapi" class="nav-link"
+              ><el-menu-item index="2-2"
+                >List Product API</el-menu-item
+              ></router-link
+            >
           </el-sub-menu>
           <el-menu-item index="3">
             <template #title>

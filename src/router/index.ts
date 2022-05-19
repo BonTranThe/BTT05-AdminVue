@@ -6,6 +6,9 @@ import BackGround from '../components/BackGround.vue'
 import NewProduct from '../components/NewProduct.vue'
 import ListProduct from '../components/ListProduct.vue'
 import EditProduct from '../components/EditProduct.vue'
+import NewProductApi from '../components/NewProductApi.vue'
+import ListProductApi from '../components/ListProductApi.vue'
+import EditProductApi from '../components/EditProductApi.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -42,6 +45,21 @@ const routes: Array<RouteRecordRaw> = [
         path: '/homemanage/editproduct',
         name: 'editproduct',
         component: EditProduct,
+      },
+      {
+        path: '/homemanage/newproductapi',
+        name: 'newproductapi',
+        component: NewProductApi,
+      },
+      {
+        path: '/homemanage/listproductapi',
+        name: 'listproductapi',
+        component: ListProductApi,
+      },
+      {
+        path: '/homemanage/editproductapi',
+        name: 'editproductapi',
+        component: EditProductApi,
       },
     ],
   },

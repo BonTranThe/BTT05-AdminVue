@@ -1,7 +1,7 @@
 <template>
   <div id="editproduct">
     <el-card>
-      <h1>Edit Product Form</h1>
+      <h1>Edit Product API Form</h1>
       <el-form ref="form" :model="productEdit" class="editproduct-form" :rules="rulesProduct">
         <el-form-item prop="name">
           <el-input
@@ -32,6 +32,7 @@
         </el-form-item>
         <el-form-item class="button">
           <el-button
+            :loading="loading"
             class="addItem-button"
             type="primary"
             @click="saveItem"
@@ -47,19 +48,15 @@
 import { mapState } from 'vuex';
 const STORAGE_KEY = "listProduct";
 export default {
-  name: "EditProduct",
+  name: "EditProductApi",
   data() {
     return {
+      loading: false,
       rulesProduct: {
         name: [
           {
             required: true,
             message: "Name of product is required",
-            trigger: "blur",
-          },
-          {
-            min: 4,
-            message: "Name of product length should be at least 4 characters",
             trigger: "blur",
           },
         ],
@@ -69,11 +66,6 @@ export default {
             message: "Price (number) is greater than or equal 1$",
             trigger: "blur",
           },
-          {
-            min: 1,
-            message: "Price length should be at least 1 characters",
-            trigger: "blur",
-          },
         ],
         quantity: [
           {
@@ -81,27 +73,14 @@ export default {
             message: "Quantity (number) is greater than or equal 1",
             trigger: "blur",
           },
-          {
-            min: 1,
-            message: "Quantity length should be at least 1 characters",
-            trigger: "blur",
-          },
         ],
       },
     }
   },
   computed: {
-    ...mapState(["products"]),
+    ...mapState(["productsAPI"]),
     productEdit() {
-      return this.products.find(product => product.id == this.$route.query.id);
-    },
-  },
-  watch: {
-    products: {
-      handler(products) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-      },
-      deep: true,
+      return this.productsAPI.find(product => product.id == this.$route.query.id);
     },
   },
   methods: {
@@ -119,15 +98,20 @@ export default {
         this.$message.error("Please fill out fully to add new product!");
         return;
       } else {
-        this.$message.success("Edit Item Successfull!");
-        this.$router.push("/homemanage/listproduct");
+        this.$store.dispatch("editProductAPI", this.productEdit);
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          this.$message.success("Edit Item Successfull!");
+          this.$router.push("/homemanage/listproductapi");
+        }, 1000);
       }
     },
   },
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #editproduct {
   max-width: 450px;
   text-align: center;
