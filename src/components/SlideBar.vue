@@ -102,45 +102,13 @@
           </el-sub-menu>
           <el-sub-menu index="12">
             <template #title>
-              <el-icon><present /></el-icon>
-              <span>Chipsoart</span>
+              <el-icon><warning /></el-icon>
+              <span>Error Log</span>
             </template>
             <el-menu-item index="12-1">New Product</el-menu-item>
             <el-menu-item index="12-2">List Product</el-menu-item>
           </el-sub-menu>
-          <el-sub-menu index="13">
-            <template #title>
-              <el-icon><coin /></el-icon>
-              <span>Charts</span>
-            </template>
-            <el-menu-item index="13-1">New Product</el-menu-item>
-            <el-menu-item index="13-2">List Product</el-menu-item>
-          </el-sub-menu>
-          <el-sub-menu index="14">
-            <template #title>
-              <el-icon><warning /></el-icon>
-              <span>Error Log</span>
-            </template>
-            <el-menu-item index="14-1">New Product</el-menu-item>
-            <el-menu-item index="14-2">List Product</el-menu-item>
-          </el-sub-menu>
-          <el-sub-menu index="15">
-            <template #title>
-              <el-icon><ticket /></el-icon>
-              <span>Donate</span>
-            </template>
-            <el-menu-item index="15-1">New Product</el-menu-item>
-            <el-menu-item index="15-2">List Product</el-menu-item>
-          </el-sub-menu>
-          <el-sub-menu index="16">
-            <template #title>
-              <el-icon><timer /></el-icon>
-              <span>Excel</span>
-            </template>
-            <el-menu-item index="16-1">New Product</el-menu-item>
-            <el-menu-item index="16-2">List Product</el-menu-item>
-          </el-sub-menu>
-          <el-menu-item index="17">
+          <el-menu-item index="13">
             <el-icon><setting /></el-icon>
             <span>Setting</span>
           </el-menu-item>

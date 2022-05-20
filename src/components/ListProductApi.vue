@@ -46,7 +46,6 @@
 
 <script>
 import { mapState } from "vuex";
-const STORAGE_KEY = "listProduct";
 export default {
   name: "ListProductApi",
   data() {
@@ -54,15 +53,18 @@ export default {
       data: null,
     }
   },
+
   mounted() {
     this.$store.dispatch("getProducts");
   },
+
   computed: {
     ...mapState(["productsAPI"]),
     filterTableData() {
       return this.productsAPI;
     },
   },
+
   methods: {
     confirmDelete(id) {
       this.$store.dispatch("deleteProductAPI", id);
@@ -70,6 +72,7 @@ export default {
         this.$message.success("Delete Successfull!");
       }, 500);
     },
+
     confirmEdit(index) {
       let id = this.productsAPI[index].id;
       this.$router.push({
@@ -77,15 +80,18 @@ export default {
         query: { id: id },
       });
     },
+
     cancel() {
       this.$message.error("Cancel Successfull!");
     },
+
     passNewProductApi() {
       this.$router.push("/homemanage/newproductapi");
     },
   },
 };
 </script>
+
 <style lang="scss" scoped>
 a {
   text-decoration: none;

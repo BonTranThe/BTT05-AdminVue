@@ -2,11 +2,11 @@
   <div class="register">
     <el-card>
       <h1>Register Form</h1>
-      <el-form ref="form" :model="model" class="register-form" :rules="rules">
+      <el-form ref="form" :model="userAPI" class="register-form" :rules="rules">
         <el-form-item prop="username">
           <el-input
             type="text"
-            v-model="model.username"
+            v-model="userAPI.username"
             placeholder="Username"
             prefix-icon="UserFilled"
           ></el-input>
@@ -14,14 +14,14 @@
         <el-form-item prop="email">
           <el-input
             type="email"
-            v-model="model.email"
+            v-model="userAPI.email"
             placeholder="Email"
             prefix-icon="Postcard"
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input
-            v-model="model.password"
+            v-model="userAPI.password"
             placeholder="Password"
             :type="!status ? 'password' : 'text'"
             prefix-icon="Lock"
@@ -50,7 +50,7 @@
             class="register-button"
             type="primary"
             native-type="submit"
-            @click="submitForm"
+            @click="addUser"
             >Register</el-button
           >
         </el-form-item>
@@ -61,18 +61,13 @@
 </template>
 
 <script>
-const STORAGE_KEY = "userlog";
+import { mapState } from "vuex";
 export default {
   name: "RegisterUser",
   data() {
     return {
-      user: JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"),
+      userAPI: this.$store.state.userAPI,
       status: false,
-      model: {
-        username: "",
-        email: "",
-        password: "",
-      },
       loading: false,
       rules: {
         username: [
@@ -114,12 +109,13 @@ export default {
       },
     };
   },
-  watch: {
-    user: {
-      handler(user) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-      },
-      deep: true,
+  mounted() {
+    this.$store.dispatch("getUsers");
+  },
+  computed: {
+    ...mapState(["usersAPI"]),
+    filterDataUser() {
+      return this.usersAPI;
     },
   },
   methods: {
@@ -130,35 +126,30 @@ export default {
         this.status = false;
       }
     },
-    simulateLogin() {
-      return new Promise((resolve) => {
-        setTimeout(resolve, 800);
-      });
-    },
-    async submitForm() {
-      let eleForm = this.$refs.form;
-      let valid = await eleForm.validate();
-      if (!valid) {
-        return;
-      }
+
+    addUser(e) {
+      console.log(this.usersAPI);
       this.loading = true;
-      await this.simulateLogin();
-      this.loading = false;
       if (
-        this.model.username === "" ||
-        this.model.password === "" ||
-        this.model.email === ""
+        this.userAPI.username === "" ||
+        this.userAPI.email === "" ||
+        this.userAPI.password === ""
       ) {
-        this.$message.error("Please fill out fully to Register your acount!");
+        e.preventDefault();
+        setTimeout(() => {
+          this.loading = false;
+          this.$message.error("PLEASE FILL OUT FULLY IN REGISTER FORM TO REGISTER ACCOUNT!")
+        }, 600);
+        return;
       } else {
-        this.user.push({
-          name: this.model.username,
-          email: this.model.email,
-          password: this.model.password,
-          statusOfLogin: false,
-        });
-        this.$message.success("Register Successfull!");
-        this.$router.push("/login");
+        setTimeout(() => {
+          this.loading = false;
+          this.$message.success("Register Successfull!");
+          this.userAPI.username = "";
+          this.userAPI.email = "";
+          this.userAPI.password = "";
+        }, 1000);
+        this.$store.dispatch("addUserAPI", this.userAPI);
       }
     },
   },

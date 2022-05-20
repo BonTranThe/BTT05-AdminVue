@@ -111,14 +111,14 @@ export default {
         return;
       } else {
         setTimeout(() => {
+          this.loading = false;
+          this.showModal = true;
           this.productAPI.name = "";
           this.productAPI.price = "";
           this.productAPI.quantity = "";
-          this.loading = false;
         },2000);
         e.preventDefault();
         this.$store.dispatch("addProductAPI", this.productAPI);
-        this.showModal = true;
       }
     },
   },
@@ -204,10 +204,11 @@ el-input {
 .alert {
   position: absolute;
   z-index: 3;
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
+  color: rgb(27, 252, 7);
   width: 300px;
   height: 100px;
-  border: 2px solid rgb(43, 40, 40);
+  border: 2px solid rgb(27, 252, 7);
   border-radius: 5px;
   top: 420px;
   left: 870px;

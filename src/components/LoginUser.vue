@@ -4,21 +4,20 @@
       <h1>Login Form</h1>
       <el-form
         ref="form"
-        :model="model"
+        :model="userAPI"
         class="login-form"
         :rules="rules"
-        @submit.prevent="log"
       >
-        <el-form-item prop="username">
+        <el-form-item>
           <el-input
-            v-model="model.username"
+            v-model="userAPI.username"
             placeholder="Username"
             prefix-icon="UserFilled"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="password">
+        <el-form-item>
           <el-input
-            v-model="model.password"
+            v-model="userAPI.password"
             placeholder="Password"
             :type="!status ? 'password' : 'text'"
             prefix-icon="Lock"
@@ -45,6 +44,7 @@
             class="login-button"
             type="primary"
             native-type="submit"
+            @click="log"
             >Login</el-button
           >
         </el-form-item>
@@ -52,20 +52,16 @@
       <router-link to="/register">Already to register? Register</router-link>
     </el-card>
   </div>
-</template>
+</template>bonbon
 
 <script>
-const STORAGE_KEY = "userlog";
+import { mapState } from "vuex";
 export default {
   name: "LoginUser",
   data() {
     return {
-      user: JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"),
+      userAPI: this.$store.state.userAPI,
       status: false,
-      model: {
-        username: "",
-        password: "",
-      },
       loading: false,
       rules: {
         username: [
@@ -94,6 +90,18 @@ export default {
       },
     };
   },
+
+  mounted() {
+    this.$store.dispatch("getUsers");
+  },
+
+  computed: {
+    ...mapState(["usersAPI"]),
+    filterDataUser() {
+      return this.usersAPI;
+    },
+  },
+
   methods: {
     show() {
       if (this.status === false) {
@@ -102,38 +110,35 @@ export default {
         this.status = false;
       }
     },
-    simulateLogin() {
-      return new Promise(resolve => {
-        setTimeout(resolve, 800);
-      });
+
+    resetInput() {
+      this.userAPI.username = "";
+      this.userAPI.password = "";
     },
-    async log() {
-      let valid = await this.$refs.form.validate();
-      console.log(this.user);
-      if (!valid) {
+
+    log(e) {
+      if (this.userAPI.username === "" || this.userAPI.password === "") {
+        e.preventDefault();
+        this.$message.error("PLEASE FILL OUT FULLY IN LOGIN FORM");
+        return;
+      } else if (this.usersAPI.length === 0) {
+        e.preventDefault();
+        this.$message.error("NO ACCOUNT! PLEASE REGISTER FOR AN ACCOUNT BEFORE LOGGING IN!");
+        this.resetInput();
         return;
       }
-      this.loading = true;
-      await this.simulateLogin();
-      this.loading = false;
-      if (localStorage.getItem("userlog") === null) {
-        this.$message.error("Please Register your acount after Login!");
-        this.model.username = "";
-        this.model.password = "";
-        return
-      } else {
-        if (
-          this.model.username === this.user[0].name &&
-          this.model.password === this.user[0].password
-          && this.user[0].statusOfLogin === false
-        ) {
-          this.$message.success("Login successfull");
-          this.$router.push("/homemanage");
-          this.user[0].statusOfLogin = true;
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(this.user))
-        } else {
-          this.$message.error("Username or password is invalid");
-        }
+      else {
+        e.preventDefault();
+        this.filterDataUser.forEach(async (item) => {
+          if (this.userAPI.username == item.username && this.userAPI.password === item.password) {
+            this.loading = true;
+            this.$message.success("LOG IN SUCCESSFULL!");
+            await this.$store.dispatch("loginUser", item.id);
+            this.$router.push("/homemanage");
+          }
+        });
+        this.userAPI.username = "";
+        this.userAPI.password = "";
       }
     },
   },

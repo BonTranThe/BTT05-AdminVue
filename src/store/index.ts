@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createStore } from "vuex";
-import { api } from "../api"
+import { api, apiUser } from "../api"
+
 const STORAGE_KEY = "listProduct";
 export default createStore({
   state: {
@@ -11,15 +12,25 @@ export default createStore({
       price: "",
       quantity: "",
     },
+    usersAPI: [],
     productsAPI: [],
     productAPI: {
       name: "",
       price: "",
       quantity: "",
     },
+    userAPI: {
+      username: "",
+      email: "",
+      password: "",
+      isLogin: false,
+    }
   },
   getters: {},
   mutations: {
+    SET_USERS(state, users) {
+      state.usersAPI = users;
+    },
     SET_PRODUCTS(state, products) {
       state.productsAPI = products;
     },
@@ -31,6 +42,12 @@ export default createStore({
     },
     ADD_PRODUCT_API(state) {
       return state.productsAPI;
+    },
+    ADD_USER_API(state) {
+      return state.usersAPI;
+    },
+    EDIT_STATUS_LOGIN_USER_API(state) {
+      return state.usersAPI;
     }
   },
   actions: {
@@ -67,6 +84,37 @@ export default createStore({
           commit("ADD_PRODUCT_API", response.data);
         })
     },
+    getUsers({commit}) {
+      axios
+        .get(`${apiUser}`)
+          .then((response) => {
+            commit("SET_USERS", response.data);
+          });
+    },
+    addUserAPI({commit}, product) {
+      axios.post(`${apiUser}`, {
+        username: product.username,
+        email: product.email,
+        password: product.password,
+      })
+        .then((response) => {
+          commit("ADD_USER_API", response.data);
+        })
+    },
+    async loginUser({commit}, id) {
+      const response = await axios.put(`${apiUser}/${id}`, {
+        isLogin: true,
+      })
+      commit("EDIT_STATUS_LOGIN_USER_API", response.data);
+    },
+    logoutUser({commit}, id) {
+      axios.put(`${apiUser}/${id}`, {
+        isLogin: false,
+      })
+        .then((response) => {
+          commit("EDIT_STATUS_LOGIN_USER_API", response.data);
+        })
+    }
   },
   modules: {},
 });
